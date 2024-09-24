@@ -1,0 +1,31 @@
+model Empleado {
+  numeroEmpleado Int @id @default(autoincrement())
+  numeroDocumento String @unique
+  fechaRegistro DateTime @default(now())
+  fechaIngreso DateTime 
+  codigoEmpresa Int
+  codigoSucursal Int
+  sueldo Decimal @db.Money
+  fechaBaja DateTime
+  codigoPuesto Int @unique
+  puesto Puestos @relation(fields: [codigoPuesto], references: [codigoPuesto])
+  usuario String
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+  @@unique([codigoEmpresa, codigoSucursal])
+  sucursal Sucursales @relation(fields: [codigoEmpresa, codigoSucursal], references: [codigoEmpresa, codigoSucur])
+  supervisorID Int?
+  carteraEmpleado CarteraEmpleado[]
+}
+
+model ProcesoContratacion {
+  codigoProceso Int @id @default(autoincrement())
+  numeroDocumento String @unique
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento],references: [numeroDocumento])
+  fechaRegistro DateTime @default(now())
+  fechaModifacion DateTime @updatedAt
+  observaciones String
+  codigoEstatus Int @unique
+  estatus Estatus  @relation(fields: [codigoEstatus], references: [codigo])
+  usuario String @unique
+}

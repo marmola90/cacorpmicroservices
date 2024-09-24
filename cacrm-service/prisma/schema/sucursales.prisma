@@ -1,0 +1,10 @@
+model Sucursales {
+  codigoSucur Int @default(autoincrement())
+  codigoEmpresa Int
+  descripcion String @unique
+  domicilio String?
+  controlSueldos ControlSueldoPuestos?
+  @@id([codigoEmpresa, codigoSucur])
+  empleado Empleado[]
+  contrato Contrato[]
+}

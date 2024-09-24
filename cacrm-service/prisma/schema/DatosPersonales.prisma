@@ -1,0 +1,119 @@
+model DatosPersonales {
+  numeroDocumento String @id @unique 
+  codigoTipoDoc TipoDocumento @default(DNI)
+  fotografia String?
+  primerNombre String
+  segundoNombre String?
+  primerApellido String
+  segundoApellido String
+  fechaNacimiento DateTime @db.Date
+  fechaRegistro DateTime @default(now())
+  fechaModificacion DateTime @updatedAt
+  genero Genero
+  estadoCivil EstadoCivil @relation(fields: [codigoEC], references: [codigoEC])
+  codigoEC Int @unique
+  codigoTP Int @unique
+  tituloProfesion TituloProfesion @relation(fields: [codigoTP], references: [codigoTP])
+  nacionalidad String @unique
+  codigoTipoPersona Int? @unique
+  tipoPersona TipoPersona? @relation(fields: [codigoTipoPersona], references: [codigoTipoPersona])
+  usuario String @unique
+  usuarioModifico String @unique
+  documentosPresentados Documentos_Presentados?
+  domicilio Domicilio[]
+  telefono Telefonos[]
+  correo Correos[]
+  cuentasBancos CuentasBancarias[]
+  enlaceCartera EnlaceCartera[]
+  procesoContratacion ProcesoContratacion[]
+  contrato Contrato[]
+  datosFamiliares DatosFamiliares[]
+}
+
+model DatosFamiliares {
+  codigoFamilia Int @id @default(autoincrement())
+  numeroDocumentoPersona String @unique
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumentoPersona], references: [numeroDocumento])
+  codigoParentesco Int @unique
+  tipoParentesco Parentesco @relation(fields: [codigoParentesco], references: [codigoParentesco])
+  numeroDoc String?
+  nombres String
+  apellidos String
+  fechaNacimiento DateTime @db.Date
+  domicilio String?
+
+}
+
+model Parentesco {
+  codigoParentesco Int @id @default(autoincrement())
+  descripcion String @unique
+  datosFamiliares DatosFamiliares?
+}
+
+model Correos {
+  codigoEmail Int @id @default(autoincrement())
+  email String @unique
+  numeroDocumento String @unique
+  tipoCorreo TipoCorreo
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento],references: [numeroDocumento])
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+}
+
+model Telefonos {
+  codigoTelefonos Int @id @default(autoincrement())
+  numeroTelefono String @unique
+  numeroDocumento String @unique
+  tipoTelefono TipoTelefono
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento], references: [numeroDocumento])
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+}
+
+model Domicilio {
+  codigoDomicilio Int @id @default(autoincrement())
+  descripcion String
+  numeroDocumento String @unique
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento],references: [numeroDocumento])
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+}
+
+model EstadoCivil {
+  codigoEC Int @id @default(autoincrement())
+  descripcionEC String @unique
+  datosPersonales DatosPersonales?
+}
+
+model TituloProfesion {
+  codigoTP Int @id @default(autoincrement())
+  descripcionTP String @unique
+  datosPersonales DatosPersonales?
+}
+
+model TipoPersona {
+  codigoTipoPersona Int @id @default(autoincrement())
+  descripcionTipoPersona String @unique
+  datosPersonales DatosPersonales?
+}
+
+enum TipoCorreo {
+  Personal
+  Empresarial
+}
+
+enum TipoTelefono {
+  Celular
+  Fijo
+}
+
+enum Genero {
+  MASCULINO
+  FEMENINO
+}
+
+enum TipoDocumento {
+  DNI
+  PASSPORTE
+  CARNET_RESIDENCIA
+}

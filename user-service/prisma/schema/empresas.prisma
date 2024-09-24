@@ -1,0 +1,7 @@
+model Empresa {
+  codigo Int @id @default(autoincrement())
+  descripcion String @unique
+  logo String
+  logoName String
+  user Usuario?
+}

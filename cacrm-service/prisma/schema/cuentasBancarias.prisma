@@ -1,0 +1,17 @@
+model Bancos {
+  codigo Int @id @default(autoincrement())
+  descripcion String @unique
+  cuenaBancaria CuentasBancarias[]
+}
+
+model CuentasBancarias {
+  numeroCuenta Int 
+  codigoBanco Int 
+  numeroDocumento String @unique
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento], references: [numeroDocumento])
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+  usuario String @unique
+  bancos Bancos @relation(fields: [codigoBanco], references: [codigo])
+  @@id([codigoBanco, numeroCuenta])
+}

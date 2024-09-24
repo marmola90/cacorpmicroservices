@@ -1,0 +1,14 @@
+model Permisos{
+  codigoPermiso Int @id @default(autoincrement())
+  descripcionPermisos String @unique
+  permisosOtor PermisosOtorgados?
+}
+
+model PermisosOtorgados{
+  codigoPermiso Int @id
+  role Role
+  permisos Permisos  @relation(fields: [codigoPermiso], references: [codigoPermiso])
+  
+
+  @@unique([codigoPermiso, role])
+}

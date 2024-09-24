@@ -1,0 +1,32 @@
+model Cartera {
+  codigoCartera Int @id @default(autoincrement())
+  descripcion String @unique
+  fechaRegistro DateTime @default(now())
+  logoName String?
+  logoUrl String?
+  usuario String
+  codgioEstatus Int @unique
+  estatus Estatus @relation(fields: [codgioEstatus], references: [codigo])
+  enlaceCartera EnlaceCartera?
+  carteraEmpleado CarteraEmpleado[]
+  }
+
+model EnlaceCartera {
+  codigoEnlace Int @id @default(autoincrement())
+  numeroDocumento String @unique
+  codigoCartera Int @unique
+  usuario String
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento], references: [numeroDocumento])
+  cartera Cartera @relation(fields: [codigoCartera], references: [codgioEstatus])
+}
+
+model CarteraEmpleado {
+  codigoCartera Int 
+  numeroEmpleado Int 
+  usuario String
+  @@id([codigoCartera, numeroEmpleado])
+  cartera Cartera @relation(fields: [codigoCartera], references: [codigoCartera])
+  empleado Empleado @relation(fields: [numeroEmpleado], references: [numeroEmpleado])
+}

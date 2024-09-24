@@ -1,0 +1,29 @@
+model TipoContrato {
+  codigoTC Int @id @default(autoincrement())
+  descripcion String @unique
+  contrato Contrato[]
+}
+
+model Contrato {
+  codigoContrato Int @id @default(autoincrement())
+  numeroDocumento String @unique
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento], references: [numeroDocumento])
+  codigoEmpresa Int
+  codigoSucursal Int
+  sucursal Sucursales @relation(fields: [codigoEmpresa,codigoSucursal], references: [codigoEmpresa, codigoSucur])
+  SueldoPactado Decimal @db.Money
+  codigoTC Int @unique
+  tipoContrato TipoContrato @relation(fields: [codigoTC], references: [codigoTC])
+  fechaRegistro DateTime @default(now())
+  fechaVencimiento DateTime
+  fechaModificacion DateTime @updatedAt
+  fechaFirma DateTime
+  observaciones String?
+  codigoPuesto Int @unique
+  puesto Puestos @relation(fields: [codigoPuesto], references: [codigoPuesto])
+  numeroEmpleado Int?
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus], references: [codigo])
+  usuario String @unique
+  @@unique([codigoEmpresa, codigoSucursal])
+}

@@ -1,0 +1,21 @@
+model Puestos {
+  codigoPuesto Int @id @default(autoincrement())
+  descripcionPuestos String @unique
+  controlSueldos ControlSueldoPuestos[]
+  empleado Empleado[]
+  contrato Contrato []
+}
+
+model ControlSueldoPuestos {
+  codigoControl Int @id @default(autoincrement())
+  fechaRegistro DateTime @default(now())
+  codigoEmpresa Int
+  codigoSucu Int
+  sucursal Sucursales @relation(fields: [codigoEmpresa,codigoSucu], references: [codigoEmpresa,codigoSucur])
+  codigoPuesto Int @unique
+  puesto Puestos @relation(fields: [codigoPuesto], references: [codigoPuesto])
+  @@unique([codigoEmpresa,codigoSucu])
+  usuario String @unique
+  codigoEstatus Int @unique
+  estatus Estatus @relation(fields: [codigoEstatus],references: [codigo])
+}

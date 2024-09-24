@@ -1,0 +1,35 @@
+model Usuario{
+  codigoUsuario Int @id @default(autoincrement())
+  usuario String @unique
+  email String @unique
+  primerNombre String
+  segundoNombre String?
+  primerApellido String
+  segundoApellido String
+  fechaNacimiento DateTime @db.Date()
+  sexo Genero
+  password String
+  fechaCreado DateTime @default(now())
+  fechaModificado DateTime @updatedAt
+  role Role @default(USER)
+  estado estadoUsuario @default(ACTIVO)
+  userImage String?
+  userImageUrl String?
+  empresa Empresa @relation(fields: [codigoEmpresa], references: [codigo])
+  codigoEmpresa Int @unique
+}
+
+enum estadoUsuario {
+  ACTIVO
+  INACTIVO
+}
+
+enum Genero {
+  MASCULINO
+  FEMENINO
+}
+
+enum Role {
+  USER
+  ADMIN
+}

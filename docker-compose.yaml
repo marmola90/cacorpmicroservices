@@ -1,0 +1,23 @@
+services:
+  pgdatabaseCACORP:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=seguridadDb, cacorpdb
+    volumes:
+      - "./seguridadDb_postgres_data:/var/lib/postgresql/data:rw"
+      - "./cacorpdb_postgres_data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5433:5432"
+  # pgdatabaseCACORP:
+  #   image: postgres:latest
+  #   environment:
+  #     - POSTGRES_USER=root
+  #     - POSTGRES_PASSWORD=root
+  #     - POSTGRES_DB=cacorpdb
+  #   volumes:
+  #     - "./cacorpdb_postgres_data:/var/lib/postgresql/data:rw"
+  #   ports:
+  #     - "5433:5432"
+  

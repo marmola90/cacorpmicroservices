@@ -1,0 +1,14 @@
+model Estatus {
+  codigo Int @id @default(autoincrement())
+  descripcion String @unique
+  cuentasBancos CuentasBancarias?
+  controlSalario ControlSueldoPuestos?
+  cartera Cartera?
+  enlaceCartera EnlaceCartera?
+  empleado Empleado?
+  procesoContratacion ProcesoContratacion?
+  contrato Contrato[]
+  correos Correos?
+  domicilio Domicilio?
+  telefonos Telefonos?
+}

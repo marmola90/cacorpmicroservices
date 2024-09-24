@@ -1,0 +1,17 @@
+model Documentos_Presentar {
+  codigoDoc Int @id @default(autoincrement())
+  descripcion String @unique
+  documentosP Documentos_Presentados?
+}
+
+model Documentos_Presentados {
+  codigoDP Int @id @default(autoincrement())
+  codigoDoc Int @unique
+  documentos Documentos_Presentar @relation(fields: [codigoDoc], references: [codigoDoc])
+  numeroDocumento String @unique
+  datosPersonales DatosPersonales @relation(fields: [numeroDocumento], references: [numeroDocumento])
+  fechaPresentado DateTime @default(now())
+  usuario String @unique
+
+  @@unique([codigoDoc,numeroDocumento])
+}
